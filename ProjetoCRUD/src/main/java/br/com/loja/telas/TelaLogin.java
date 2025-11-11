@@ -28,10 +28,28 @@ public class TelaLogin extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);
-                this.dispose();
-                conexao.close();
+                String perfil = rs.getString(6);
+                //System.out.println("Perfil ==> "+perfil);
+                
+                if (perfil.equals("admin")) {
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    
+                    TelaPrincipal.MenuRelatorio.setEnabled(true);
+                    TelaPrincipal.MenuCadastroUsuarios.setEnabled(true);
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                            
+                    this.dispose();
+                    conexao.close();
+                } else {
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    
+                    this.dispose();
+                    conexao.close();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário/Senha Inválidos!");
             }

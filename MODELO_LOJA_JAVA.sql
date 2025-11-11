@@ -7,7 +7,8 @@ CREATE TABLE usuarios (
     usuario varchar(50) not null,
     fone varchar(15),
     login varchar(15) not null unique,
-    senha varchar(15) not null
+    senha varchar(15) not null,
+    perfil varchar(20) not null
 );
 
 CREATE TABLE clientes (
@@ -30,10 +31,10 @@ CREATE TABLE ordem_servico (
     foreign key(idcli) references clientes(idcli)
 );
 
-INSERT INTO usuarios (usuario, fone, login, senha) VALUES 
-  ('Admin User', '1234567890', 'admin', 'adminpass'),
-  ('User One', '0987654321', 'user1', 'user1pass'),
-  ('User Two', '1122334455', 'user2', 'user2pass');
+INSERT INTO usuarios (usuario, fone, login, senha, perfil) VALUES 
+  ('Anderson Vanin', '1234567890', 'anderson', '1234', 'admin'),
+  ('Fulano da Silva', '0987654321', 'fulano', 'adminpass', 'admin'),
+  ('Zezinho da Silva', '1122334455', 'zezinho', 'userpass', 'user');
 
 INSERT INTO clientes (nomecli, endcli, fonecli, emailcli) VALUES
   ('Cliente A', 'Rua 1, 123', '999888777', 'clientea@email.com'),

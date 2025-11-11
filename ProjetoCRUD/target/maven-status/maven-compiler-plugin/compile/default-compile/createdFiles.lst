@@ -1,8 +1,11 @@
 br\com\loja\telas\TelaPrincipal.class
+br\com\loja\telas\TelaUsuarios.class
 br\com\loja\telas\TelaLogin$2.class
+br\com\loja\telas\TelaPrincipal$5.class
 br\com\loja\telas\TelaSobre.class
 br\com\loja\telas\TelaPrincipal$1.class
 br\com\loja\telas\TelaPrincipal$3.class
+br\com\loja\telas\TelaUsuarios$1.class
 br\com\loja\telas\TelaPrincipal$4.class
 br\com\loja\telas\TelaPrincipal$2.class
 br\com\loja\telas\TelaLogin.class
