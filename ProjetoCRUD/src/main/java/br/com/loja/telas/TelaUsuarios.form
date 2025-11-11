@@ -121,11 +121,9 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnApagar" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnAdicionar" max="32767" attributes="0"/>
-                      <Component id="btnSelecionar" max="32767" attributes="0"/>
-                      <Component id="btnAlterar" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="btnAdicionar" max="32767" attributes="0"/>
+                  <Component id="btnSelecionar" max="32767" attributes="0"/>
+                  <Component id="btnAlterar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
@@ -199,6 +197,9 @@
           <Dimension value="[80, 80]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdicionarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSelecionar">
       <Properties>
@@ -230,6 +231,9 @@
           <Dimension value="[80, 80]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnApagar">
       <Properties>
@@ -244,6 +248,9 @@
           <Dimension value="[80, 80]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApagarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -50,6 +50,91 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private void adicionar() {
+        String sql = "INSERT INTO usuarios (iduser,usuario,fone,login,senha,perfil) VALUES (?,?,?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtId.getText());
+            pst.setString(2, txtNome.getText());
+            pst.setString(3, txtFone.getText());
+            pst.setString(4, txtLogin.getText());
+            String captura_senha = new String(txtSenha.getPassword());
+            pst.setString(5, captura_senha);
+            pst.setString(6, comboPerfil.getSelectedItem().toString());
+            
+            if (txtId.getText().isEmpty() || txtNome.getText().isEmpty() || txtFone.getText().isEmpty() || txtLogin.getText().isEmpty() || txtSenha.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+            } else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!");
+                    txtId.setText(null);
+                    txtNome.setText(null);
+                    txtFone.setText(null);
+                    txtLogin.setText(null);
+                    txtSenha.setText(null);
+                    comboPerfil.setSelectedItem(null);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void alterar() {
+        String sql = "UPDATE usuarios set usuario=?, fone=?, login=?, senha=?, perfil=? WHERE iduser=?";
+        try {
+           pst = conexao.prepareStatement(sql);
+           pst.setString(1, txtNome.getText());
+           pst.setString(2, txtFone.getText());
+           pst.setString(3, txtLogin.getText());
+           String captura_senha = new String(txtSenha.getPassword());
+           pst.setString(4, captura_senha);
+           pst.setString(5, comboPerfil.getSelectedItem().toString());
+           pst.setString(6, txtId.getText());
+           
+           if (txtId.getText().isEmpty() || txtNome.getText().isEmpty() || txtFone.getText().isEmpty() || txtLogin.getText().isEmpty() || txtSenha.getText().isEmpty()) {
+               JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+           } else {
+               int adicionado = pst.executeUpdate();
+               if (adicionado > 0) {
+                   JOptionPane.showMessageDialog(null, "Dados do usuário alterado com sucesso!");
+                   txtId.setText(null);
+                   txtNome.setText(null);
+                   txtFone.setText(null);
+                   txtLogin.setText(null);
+                   txtSenha.setText(null);
+                   comboPerfil.setSelectedItem(null);
+               }
+           }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void remover() {
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja remover este usuário?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "DELETE FROM usuarios WHERE iduser=?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtId.getText());
+                int apagado = pst.executeUpdate();
+                if (apagado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                    txtId.setText(null);
+                    txtNome.setText(null);
+                    txtFone.setText(null);
+                    txtLogin.setText(null);
+                    txtSenha.setText(null);
+                    comboPerfil.setSelectedItem(null);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +186,11 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         btnAdicionar.setToolTipText("Adicionar");
         btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdicionar.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/loja/icones/search.png"))); // NOI18N
         btnSelecionar.setToolTipText("Selecionar");
@@ -116,11 +206,21 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         btnAlterar.setToolTipText("Alterar");
         btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAlterar.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/loja/icones/remove.png"))); // NOI18N
         btnApagar.setToolTipText("Apagar");
         btnApagar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnApagar.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,10 +298,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -211,6 +310,18 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         consultar();
     }//GEN-LAST:event_btnSelecionarActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        adicionar();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        alterar();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        remover();
+    }//GEN-LAST:event_btnApagarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
